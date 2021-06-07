@@ -1,22 +1,16 @@
-let callData;
 loadAPI();
 function loadAPI() {
-    // let [connect, option] = APIData();
-    let data = {
-        project: 'sprinkle-great-rodent',
-        option: { method: 'GET' },
-        token: '5b1064585f4ab8706d275f90',
-        endpoint: ['lists', 'items']
-    }
     var api = "https://gateway.marvel.com/v1/public/characters?apikey=";
     var auth = "9fc3988f672586da032a847df46e7861";
     var connect = api + auth;
-    fetch(connect, data.option)
+    fetch(connect)
         .then(response => response.json())
         .then(data => {
-            data.data.results.forEach(element => {
-                console.log(element);
-            });
+            console.log(data.data.results)
+            let character = data.data.results[4];
+            document.getElementById("name").innerHTML = character.name;
+            document.getElementById("image").setAttribute("src", character.thumbnail.path + "." + character.thumbnail.extension);
+            document.getElementById("description").innerHTML = character.description;
         })
         .catch(err => console.log(err));
 }
