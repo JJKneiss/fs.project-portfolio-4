@@ -13,7 +13,7 @@ function loadAPI() {
     fetch(connect, data.option)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            console.log(data.results)
             // const evt = new Event("vGetItems_Complete");
             // evt.data = data;
             // document.dispatchEvent(evt);
