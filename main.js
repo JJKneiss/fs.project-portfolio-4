@@ -2,7 +2,6 @@ let callData;
 console.log("HEllo world")
 
 loadAPI();
-console.log(callData);
 function loadAPI() {
     // let [connect, option] = APIData();
     let data = {
@@ -19,6 +18,7 @@ function loadAPI() {
         .then(data => {
             console.log(data);
             callData = data;
+            console.log(callData);
         })
         .catch(err => console.log(err));
 }
