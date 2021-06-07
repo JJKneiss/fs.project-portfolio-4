@@ -8,7 +8,7 @@ function loadAPI() {
         endpoint: ['lists', 'items']
     }
     var api = "https://gateway.marvel.com/v1/public/comics?apikey=";
-    var auth = "c50913a9334a3754d0d52463a2fb668bc5ee5979";
+    var auth = "9fc3988f672586da032a847df46e7861";
     var connect = api + auth;
     fetch(connect, data.option)
         .then(response => response.json())
