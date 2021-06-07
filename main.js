@@ -1,4 +1,5 @@
-loadAPI()
+let callData;
+loadAPI();
 function loadAPI() {
     // let [connect, option] = APIData();
     let data = {
@@ -14,10 +15,9 @@ function loadAPI() {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            console.log(data.results[1])
             // const evt = new Event("vGetItems_Complete");
-            // evt.data = data;
-            // document.dispatchEvent(evt);
+            callData = data;
         })
         .catch(err => console.log(err));
 }
+console.log(callData.results);
