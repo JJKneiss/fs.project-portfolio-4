@@ -1,75 +1,55 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
 import ImageCard from '../components/ImageCard/ImageCard'
-import ProfileImage from '../images/66CA0688-6891-4ED4-9946-AB09012CC531_1_105_c.jpeg'
+import CharData from '../DTO/CharData';
 
 class Home extends Component {
+
     state = {
         formInput: [{
         }],
-        characters: [{
-            title: "Apples",
-            img: ProfileImage,
-            description: "Description"
-        },
-        {
-            title: "Bananas",
-            img: ProfileImage,
-            description: "New Description"
-        },
-        {
-            title: "Cucumbers",
-            img: ProfileImage,
-            description: "old Description"
-        },
-        {
-            title: "Dragonfruit",
-            img: ProfileImage,
-            description: "Description"
-        },
-        {
-            title: "Elderberry",
-            img: ProfileImage,
-            description: "New Description"
-        },
-        {
-            title: "Fruit",
-            img: ProfileImage,
-            description: "old Description"
-        },
-        {
-            title: "Honey",
-            img: ProfileImage,
-            description: "Description"
-        },
-        {
-            title: "Iced Coffee",
-            img: ProfileImage,
-            description: "New Description"
-        },
-        {
-            title: "Juice",
-            img: ProfileImage,
-            description: "old Description"
-        },
-        {
-            title: "Kabob",
-            img: ProfileImage,
-            description: "old Description"
-        }]
+        charData: []
     }
+
+    loadAPI = () => {
+        const api = "https://gateway.marvel.com/v1/public/characters?apikey=";
+        let auth = "9fc3988f672586da032a847df46e7861";
+        let connect = api + auth;
+        fetch(connect)
+            .then(response => response.json())
+            .then(data => {
+                let arr = [];
+                data.data.results.forEach(element => {
+                    let c = new CharData();
+                    c.name = element.name;
+                    c.description = element.description;
+                    c.thumbnail = element.thumbnail.path + "." + element.thumbnail.extension;
+                    arr.push(c);
+                });
+                this.setState({ charData: arr })
+            })
+            .catch(err => console.log(err));
+    };
+    componentDidMount = () => this.loadAPI();
     render() {
-        let characters = this.state.characters.map((element, index) => {
-            return <ImageCard key={index} val={element} height="100px" width="100px" />
+        let characters = this.state.charData.map((element, index) => {
+            return <ImageCard key={index} val={element} height="150px" width="150px" />
         });
+
         return (
             <div className="App">
                 <Header />
-                <h2>Home</h2>
-                <input />
-                <button>Filter</button>
-                {characters}
-                <button>Load More</button>
+                <section>
+                    <form class="example" action="action_page.php">
+                        <input type="text" placeholder="Search.." name="search" />
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                        <button>Filter</button>
+                    </form>
+                </section>
+                <section className="characters">
+                    {characters}
+                    <button className="load-more">Load More</button>
+                </section>
             </div >
         );
     }

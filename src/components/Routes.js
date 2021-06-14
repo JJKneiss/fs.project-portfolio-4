@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../pages/Home';
 import About from '../pages/About';
 import Character from '../pages/Character';
+import Test from '../pages/Test'
 
 const Routes = () => {
     return (
@@ -13,6 +14,7 @@ const Routes = () => {
                 <Route path='/Home' component={Home} />
                 <Route path='/About' component={About} />
                 <Route path='/Character' component={Character} />
+                <Route path="/Test/:text" component={Test} />
             </Switch>
         </section>
     );

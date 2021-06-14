@@ -9,18 +9,18 @@ class About extends Component {
         formInput: [{
         }],
         profile: [{
-            title: "Jamie Kneiss",
-            img: ProfileImage,
+            name: "Jamie Kneiss",
+            thumbnail: ProfileImage,
             description: "Description"
         }],
         project: [{
-            title: "Project Synopsis: Marvel Wiki",
+            name: "Project Synopsis: Marvel Wiki",
             description: "A simple wiki using the Marvel API"
         }]
     }
     render() {
         let profile = this.state.profile.map((element, index) => {
-            return <ImageCard key={index} val={element} />
+            return <ImageCard key={index} val={element} height="100px" width="100px" />
         });
         let project = this.state.project.map((element, index) => {
             return <TextCard key={index} val={element} />

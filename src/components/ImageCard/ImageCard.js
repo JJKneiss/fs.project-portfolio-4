@@ -1,11 +1,15 @@
 import React from 'react';
+import './ImageCard.css'
 
 const ImageCard = props => {
+    let title = props.val.name;
+    let desc = (props.val.description || "No Description Available");
+    let thumbnail = props.val.thumbnail;
     return (
-        <div key={props.id}>
-            <h3>{props.val.title}</h3>
-            <img alt="profile" src={props.val.img} width="200px" height="200px" />
-            <p>{props.val.description}</p>
+        <div class="item-card" key={props.id}>
+            <h3>{title}</h3>
+            <img alt={title} src={thumbnail} width={props.width} height={props.height} />
+            <p>{desc}</p>
         </div>
     );
 }

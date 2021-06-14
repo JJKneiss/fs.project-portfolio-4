@@ -1,11 +1,18 @@
 import React from 'react';
+import './Header.css'
 import Nav from '../Nav/Nav';
 
 const Header = props => {
     return (
         <header>
-            <h1>Marvel Wiki</h1>
-            <Nav />
+            <ul>
+                <li>
+                    <h1>Marvel Wiki</h1>
+                </li>
+                <li>
+                    <Nav />
+                </li>
+            </ul>
         </header >
     );
 }

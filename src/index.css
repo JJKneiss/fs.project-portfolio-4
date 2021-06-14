@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-color: #303841;
+  color: #eeeeee;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -12,7 +14,11 @@ code {
     monospace;
 }
 div{
-  outline: 2px solid red;
-  width: 80%;
   margin: 0 auto;
+}
+button.load-more{
+  padding: 1rem;
+  border: 2px solid #3a4750;
+  background-color: #d72323;
+  color: #eeeeee;
 }
