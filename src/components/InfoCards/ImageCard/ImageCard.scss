@@ -1,0 +1,58 @@
+@import '../../../scss/variables.scss';
+
+article.item-card{
+    background-color: $background-2;
+    border: 2px solid #404f59;
+    height: 250px;
+    width: calc(100% / 2 - 50px);
+    div{
+        height: 200px;
+        &.char-profile{
+            position: relative;
+            margin: 2rem;
+            float: left;
+            h3{
+                position: relative;
+                padding: 1rem 2rem;
+                width: 102px;
+                background-color: $text-1;
+                border-radius: 0 10px 10px 0;
+                text-align: left;
+                color: $text-2;
+                z-index: 1;
+            }
+        
+            img{
+                border: 2px solid $text-2;
+                margin-top: -100px;
+                z-index: 0;
+                height: 200px;
+                width: 200px;
+            }
+        }
+        &.description{
+            float: right;
+            width: calc(65% - 8rem);
+            margin: 2rem;
+            a{
+                margin: 1rem;
+                width: max-content;
+                padding: 10px;
+                background-color: red;
+                float: left;
+            }
+            p{
+                margin: 0rem auto;
+                text-align: left;
+                height: min-content;
+                &.unavailable{
+                    margin: 1rem;
+                    height: 20px;
+                    padding: 10px;
+                    background-color: #404f59;
+                    border: 2px solid #303841;
+                }
+            }
+        }
+    }
+}

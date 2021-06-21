@@ -1,0 +1,13 @@
+@import '../../scss/variables.scss';
+
+a{
+    color: white;
+    &.attribute{
+        color: $text-2;
+        text-decoration: none;
+    }
+}
+footer{
+    padding: 2rem;
+    background-color: $background-2; 
+}

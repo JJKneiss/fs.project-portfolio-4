@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
-import TextCard from '../components/TextCard/TextCard'
-import ImageCard from '../components/ImageCard/ImageCard'
+import ImageCard from '../components/InfoCards/ImageCard/ImageCard'
 import ProfileImage from '../images/66CA0688-6891-4ED4-9946-AB09012CC531_1_105_c.jpeg'
 
 class About extends Component {
@@ -19,18 +18,24 @@ class About extends Component {
         }]
     }
     render() {
+        // Map image cards using passed state
         let profile = this.state.profile.map((element, index) => {
             return <ImageCard key={index} val={element} height="100px" width="100px" />
-        });
-        let project = this.state.project.map((element, index) => {
-            return <TextCard key={index} val={element} />
         });
         return (
             <div className="App">
                 <Header />
-                <h2>About</h2>
-                {profile}
-                {project}
+                <section>
+                    <div className="profile">
+                        <h2>Jamie Kneiss</h2>
+                        <img alt={profile} src={ProfileImage} height="300px" width="300px" />
+                        <p>Minor Description</p>
+                    </div>
+                    <div className="project">
+                        <h2>Project: Marvel Wiki</h2>
+                        <p>A basic wiki application using the Marvel API</p>
+                    </div>
+                </section>
             </div >
         );
     }

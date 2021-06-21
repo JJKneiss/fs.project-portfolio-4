@@ -1,0 +1,15 @@
+@import '../../scss/variables.scss';
+
+header{
+    height: 7rem;
+    width: 100%;
+    background-color: $background-2; 
+    color: $text-2;
+    h1{
+        margin: 0 2rem; 
+        width: max-content;
+    }
+    ul, li {
+        display: inline;
+    }
+}

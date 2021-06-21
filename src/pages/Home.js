@@ -1,55 +1,116 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
-import ImageCard from '../components/ImageCard/ImageCard'
+import Footer from '../components/Footer/Footer';
+import Search from '../components/Search/Search';
+
 import CharData from '../DTO/CharData';
+import ImageList from '../components/InfoCards/ImageList/ImageList';
 
 class Home extends Component {
 
     state = {
         formInput: [{
         }],
-        charData: []
+        charData: [],
+        attribution: []
     }
 
-    loadAPI = () => {
-        const api = "https://gateway.marvel.com/v1/public/characters?apikey=";
+    loadAPI = async () => {
+        // Create API call
+        const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
         let auth = "9fc3988f672586da032a847df46e7861";
         let connect = api + auth;
-        fetch(connect)
-            .then(response => response.json())
-            .then(data => {
-                let arr = [];
-                data.data.results.forEach(element => {
-                    let c = new CharData();
-                    c.name = element.name;
-                    c.description = element.description;
-                    c.thumbnail = element.thumbnail.path + "." + element.thumbnail.extension;
-                    arr.push(c);
-                });
-                this.setState({ charData: arr })
-            })
-            .catch(err => console.log(err));
+        try {
+            const response = await fetch(connect);
+            const data = await response.json();
+
+            let arr = [];
+            let credit = data.attributionText;
+            // Pass data to new Character Object
+            data.data.results.forEach(element => {
+                let c = new CharData();
+                c.id = element.id;
+                c.name = element.name;
+                c.description = element.description;
+                c.thumbnail = element.thumbnail.path + "." + element.thumbnail.extension;
+                c.comics = element.comics;
+                c.events = element.events;
+                c.series = element.series;
+                c.stories = element.stories;
+                arr.push(c);
+            });
+            // Set state using Character Object
+            this.setState({ charData: arr })
+            this.setState({ attribution: credit })
+        }
+        catch (err) {
+            console.log(err);
+        }
     };
+    sendSearch(item) {
+        if (item !== undefined && item !== "") {
+            console.log(item);
+            let newCall = async () => {
+                const api = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=";
+                let name = item;
+                let fullCall = api + name;
+                const key = "&apikey=";
+                let auth = "9fc3988f672586da032a847df46e7861";
+                let fullAuth = key + auth;
+                let connect = fullCall + fullAuth;
+                try {
+                    const response = await fetch(connect);
+                    const data = await response.json();
+
+                    let arr = [];
+                    let credit = data.attributionText;
+                    console.log(data.data.results)
+                    if (data.data.results.length === 0) {
+                        alert("No results. Please check your spelling");
+                    }
+                    else {
+                        // Pass data to new Character Object
+                        data.data.results.forEach(element => {
+                            console.log(element);
+                            let c = new CharData();
+                            c.id = element.id;
+                            c.name = element.name;
+                            c.description = element.description;
+                            c.thumbnail = element.thumbnail.path + "." + element.thumbnail.extension;
+                            c.comics = element.comics;
+                            c.events = element.events;
+                            c.series = element.series;
+                            c.stories = element.stories;
+                            arr.push(c);
+                        });
+                        // Set state using Character Object
+                        this.setState({ charData: arr })
+                        this.setState({ attribution: credit })
+                    }
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            }
+            newCall();
+        }
+        else {
+            alert("Search bar empty.");
+        }
+    }
     componentDidMount = () => this.loadAPI();
     render() {
-        let characters = this.state.charData.map((element, index) => {
-            return <ImageCard key={index} val={element} height="150px" width="150px" />
-        });
-
         return (
             <div className="App">
                 <Header />
-                <section>
-                    <form class="example" action="action_page.php">
-                        <input type="text" placeholder="Search.." name="search" />
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                        <button>Filter</button>
-                    </form>
-                </section>
-                <section className="characters">
-                    {characters}
-                    <button className="load-more">Load More</button>
-                </section>
+                <Search data={
+                    {
+                        charData: this.state.charData,
+                        sendSearch: this.sendSearch.bind(this)
+                    }
+                } />
+                <ImageList path={this.state.charData} className="characters" />
+                <Footer credit={this.state.attribution} />
             </div >
         );
     }
