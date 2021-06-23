@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
+import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
-import ImageCard from '../components/InfoCards/ImageCard/ImageCard'
 import ItemList from '../components/ItemList/ItemList';
-
 import CharData from '../DTO/CharData';
-import ProfileImage from '../images/66CA0688-6891-4ED4-9946-AB09012CC531_1_105_c.jpeg'
 
 class Character extends Component {
     state = {
-        formInput: [{
-        }],
         character: {
             id: "",
             name: "",
@@ -19,17 +15,7 @@ class Character extends Component {
             series: [],
             stories: [],
             events: []
-        },
-        suggested: [{
-            name: "Previous Character",
-            thumbnail: ProfileImage,
-            description: "The previous character in the list"
-        },
-        {
-            name: "Next Character",
-            thumbnail: ProfileImage,
-            description: "The next character in the list"
-        }]
+        }
     }
     loadCharacter = () => {
         // Abbreviate state variable & create new Character Object
@@ -84,16 +70,12 @@ class Character extends Component {
             console.log(err);
         }
     };
-    renderImageCards(path) {
-        // If character description unavailable, set proper element
-        let eventList = (path.length >= 1 || "No Description Available");
-        if (eventList === "No Description Available") {
-            return <h3> No Events Available</h3>
+    renderDescription(desc) {
+        if (desc === "") {
+            return (<p className="unavailable">{"No Description Available"}</p>)
         }
         else {
-            return (path.map((element, index) => {
-                return <ImageCard key={index} val={element} height="150px" width="150px" />
-            }))
+            return (<p>{desc}</p>)
         }
     }
     componentDidMount = () => this.loadCharacter();
@@ -101,14 +83,13 @@ class Character extends Component {
     render() {
         // Abbreviate state & set render logic
         let character = this.state.character;
-        let suggested = this.renderImageCards(this.state.suggested);
         return (
             <div className="App" >
                 <Header />
                 <section className="characters">
                     <h2>{character.name}</h2>
                     <img alt={character.name} src={character.thumbnail} height="300px" width="300px"></img>
-                    <p>{character.description}</p>
+                    {this.renderDescription(character.description)}
                 </section>
                 <section className="characters">
                     {/* Pass list title & state path */}
@@ -117,10 +98,7 @@ class Character extends Component {
                     <ItemList title={"Events"} path={character.events} />
                     <ItemList title={"Stories"} path={character.stories} />
                 </section>
-                <section className="characters">
-                    <h2>Suggested</h2>
-                    {suggested}
-                </section>
+                <Footer credit={this.state.attribution} />
             </div >
         );
     }

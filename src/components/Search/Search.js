@@ -1,5 +1,7 @@
 import React from 'react';
-// // import './Search.css'
+import { NavLink } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
+import './Search.scss';
 
 class Search extends React.Component {
     // Create Controlled Component
@@ -20,14 +22,22 @@ class Search extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
     }
-
     render() {
+        let query = this.props.data;
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="text" value={this.state.value} placeholder="Search" onChange={this.handleChange} />
+                <input type="text" value={this.state.value} placeholder="Search" onChange={this.handleChange}
+                    onKeyDown={(e) => { if (e.key === 'Enter') { query.sendSearch(this.state.value) } }}
+                />
                 {/* On Click send state value to Home page sendSearch function */}
-                <input type="submit" value="Submit" onClick={() => this.props.data.sendSearch(this.state.value)} />
-            </form>
+
+                < NavLink to={{
+                    pathname: "/Search/" + this.state.value,
+                    state: this.state.value
+                }}>
+                    <FaSearch onClick={() => query.sendSearch(this.state.value)} />
+                </NavLink>
+            </form >
         );
     }
 }

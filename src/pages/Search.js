@@ -23,6 +23,7 @@ class Home extends Component {
     };
     sendSearch(item) {
         if (item !== undefined && item !== "") {
+            console.log(item);
             (async () => {
                 const api = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=";
                 let name = item;
@@ -44,12 +45,14 @@ class Home extends Component {
             const data = await response.json();
             let arr = [];
             let credit = data.attributionText;
+            console.log(data.data.results)
             if (data.data.results.length === 0) {
                 alert("No results. Please check your spelling");
             }
             else {
                 // Pass data to new Character Object
                 data.data.results.forEach(element => {
+                    console.log(element);
                     let c = new CharData();
                     c.id = element.id;
                     c.name = element.name;
@@ -70,9 +73,10 @@ class Home extends Component {
             console.log(err);
         }
     }
-    componentDidMount = () => this.loadAPI();
+    componentDidMount = () => this.sendSearch(this.props.match.params.text);
     render() {
-        // let limiter = 4;
+        // let query = this.props.match.params.text;
+        // console.log(query);
         return (
             <div className="App">
                 <Header />

@@ -8,6 +8,8 @@ a{
     }
 }
 footer{
+    width: calc(100% - 4rem);
     padding: 2rem;
+    float: left;
     background-color: $background-2; 
 }
