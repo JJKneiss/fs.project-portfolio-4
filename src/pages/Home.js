@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import Search from '../components/Search/Search';
+import SearchForm from '../components/Search/SearchForm';
 
-import CharData from '../DTO/CharData';
-import ImageList from '../components/InfoCards/ImageList/ImageList';
+import CharData from '../data/CharData';
+import ImageList from '../components/ImageList/ImageList';
 
 class Home extends Component {
 
     state = {
         charData: [],
         attribution: [],
-        limiter: 4
+        limiter: 4,
+        offset: 0,
+        totalResults: 0
     }
 
     loadAPI = async () => {
@@ -19,6 +21,9 @@ class Home extends Component {
         const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
         let auth = "9fc3988f672586da032a847df46e7861";
         let connect = api + auth;
+        connect += '&limit=' + this.state.limiter;
+        connect += '&offset=' + this.state.offset;
+        console.log('api url', connect)
         this.setData(connect);
     };
     sendSearch(item) {
@@ -26,7 +31,9 @@ class Home extends Component {
             (async () => {
                 const api = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=";
                 let name = item;
-                let fullCall = api + name;
+                let fullCall = api + name
+                fullCall += '&limit=' + this.state.limiter;
+                fullCall += '&offset=' + this.state.offset;
                 const key = "&apikey=";
                 let auth = "9fc3988f672586da032a847df46e7861";
                 let fullAuth = key + auth;
@@ -42,13 +49,15 @@ class Home extends Component {
         try {
             const response = await fetch(connect);
             const data = await response.json();
-            let arr = [];
-            let credit = data.attributionText;
+            let arr = this.state.charData || [];
             if (data.data.results.length === 0) {
                 alert("No results. Please check your spelling");
             }
             else {
+                console.log(connect);
+                console.log("api response", data.data)
                 // Pass data to new Character Object
+                this.setState({ offset: data.data.offset + data.data.count })
                 data.data.results.forEach(element => {
                     let c = new CharData();
                     c.id = element.id;
@@ -63,7 +72,8 @@ class Home extends Component {
                 });
                 // Set state using Character Object
                 this.setState({ charData: arr })
-                this.setState({ attribution: credit })
+                this.setState({ attribution: data.attributionText })
+                console.log(arr)
             }
         }
         catch (err) {
@@ -76,18 +86,15 @@ class Home extends Component {
         return (
             <div className="App">
                 <Header />
-                <Search data={
-                    {
-                        charData: this.state.charData,
-                        sendSearch: this.sendSearch.bind(this)
-                    }
-                } />
+                <SearchForm />
                 <section className="characters">
-                    <ImageList path={this.state.charData} limiter={this.state.limiter} className="characters" />
-                    <button className="load-more" onClick={() => {
-                        this.setState({ limiter: this.state.limiter + 4 })
-                        console.log(this.state.limiter)
-                    }}>Load More</button>
+                    <ImageList path={this.state.charData} className="characters" />
+                    {/* <button className="load-more" onClick={() => { */}
+                    {/* this.setState({ limiter: this.state.limiter + 4 }) */}
+                    {/* console.log(this.state.limiter) */}
+                    {/* }}>Load More</button> */}
+                    <button className="load-more" onClick={this.loadAPI}>Load More</button>
+                    <p></p>
                 </section>
                 <Footer credit={this.state.attribution} />
             </div >

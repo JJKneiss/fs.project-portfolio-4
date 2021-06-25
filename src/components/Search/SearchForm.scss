@@ -12,6 +12,15 @@ form{
         border: 2px solid #303841;
         border-right: none;
     }
+    button:disabled{
+        color: gray;
+    }
+    button{
+        color: $text-1;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
     svg{
         margin: 0px;
         padding: 10px;

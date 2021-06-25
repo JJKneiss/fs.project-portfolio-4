@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
-import Search from '../components/Search/Search';
+import SearchForm from '../components/Search/SearchForm';
 
-import CharData from '../DTO/CharData';
-import ImageList from '../components/InfoCards/ImageList/ImageList';
+import CharData from '../data/CharData';
+import ImageList from '../components/ImageList/ImageList';
 
-class Home extends Component {
+class SearchPage extends Component {
+
 
     state = {
         charData: [],
         attribution: [],
-        limiter: 4
+        limiter: 4,
+        offset: 0,
+        totalResults: 0
     }
 
     loadAPI = async () => {
@@ -19,15 +22,19 @@ class Home extends Component {
         const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
         let auth = "9fc3988f672586da032a847df46e7861";
         let connect = api + auth;
+        connect += '&limit=' + this.state.limiter;
+        connect += '&offset=' + this.state.offset;
+        console.log('api url', connect)
         this.setData(connect);
     };
     sendSearch(item) {
         if (item !== undefined && item !== "") {
-            console.log(item);
             (async () => {
                 const api = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=";
                 let name = item;
-                let fullCall = api + name;
+                let fullCall = api + name
+                fullCall += '&limit=' + this.state.limiter;
+                fullCall += '&offset=' + this.state.offset;
                 const key = "&apikey=";
                 let auth = "9fc3988f672586da032a847df46e7861";
                 let fullAuth = key + auth;
@@ -43,16 +50,16 @@ class Home extends Component {
         try {
             const response = await fetch(connect);
             const data = await response.json();
-            let arr = [];
+            let arr = this.state.charData || [];
             let credit = data.attributionText;
-            console.log(data.data.results)
             if (data.data.results.length === 0) {
                 alert("No results. Please check your spelling");
             }
             else {
+                console.log("api response", data.data)
                 // Pass data to new Character Object
+                this.setState({ offset: data.data.offset + data.data.count, totalResults: data.data.total })
                 data.data.results.forEach(element => {
-                    console.log(element);
                     let c = new CharData();
                     c.id = element.id;
                     c.name = element.name;
@@ -67,35 +74,46 @@ class Home extends Component {
                 // Set state using Character Object
                 this.setState({ charData: arr })
                 this.setState({ attribution: credit })
+                console.log(arr)
             }
         }
         catch (err) {
             console.log(err);
         }
     }
+
+    // SB: Runs any time the component is about to be displayed, so we grab the url variable and trigger our search.
     componentDidMount = () => this.sendSearch(this.props.match.params.text);
+
+    // SB: Runs if the component is already mounted, but something in props or state changes.
+    componentDidUpdate = (previousProps) => {
+
+        // SB: Because the component updates frequently, we have to make sure we're only loading
+        //      new data when the url has been changed.
+        if (previousProps.match.params.text !== this.props.match.params.text) {
+            // SB Note: In here would be a reasonable place to nuke the charData array, since it only runs when the
+            //          search has changed and not necessarily when you "show more"
+            this.sendSearch(this.props.match.params.text);
+        }
+    }
     render() {
-        // let query = this.props.match.params.text;
-        // console.log(query);
         return (
             <div className="App">
                 <Header />
-                <Search data={
-                    {
-                        charData: this.state.charData,
-                        sendSearch: this.sendSearch.bind(this)
-                    }
-                } />
+                {/* SB: No longer need to pass unnecessary data or functions to Search. */}
+                <SearchForm />
                 <section className="characters">
-                    <ImageList path={this.state.charData} limiter={this.state.limiter} className="characters" />
-                    <button className="load-more" onClick={() => {
-                        this.setState({ limiter: this.state.limiter + 4 })
-                        console.log(this.state.limiter)
-                    }}>Load More</button>
+                    <ImageList path={this.state.charData} className="characters" />
+                    {/* <button className="load-more" onClick={() => { */}
+                    {/* this.setState({ limiter: this.state.limiter + 4 }) */}
+                    {/* console.log(this.state.limiter) */}
+                    {/* }}>Load More</button> */}
+                    <button className="load-more" onClick={this.loadAPI} />
+                    <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
                 </section>
                 <Footer credit={this.state.attribution} />
             </div >
         );
     }
 }
-export default Home;
+export default SearchPage;

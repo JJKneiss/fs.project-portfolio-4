@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import ItemList from '../components/ItemList/ItemList';
-import CharData from '../DTO/CharData';
+import CharData from '../data/CharData';
 
 class Character extends Component {
     state = {
@@ -78,6 +78,27 @@ class Character extends Component {
             return (<p>{desc}</p>)
         }
     }
+    renderLists(character) {
+        console.log(character.comics.length);
+        let arr = [character.comics, character.series, character.events, character.stories];
+        console.log(arr);
+        let counter = character.comics.length + character.series.length + character.events.length + character.stories.length;
+        arr.forEach(element => {
+            counter += element.length;
+        })
+        console.log(counter);
+        if (counter === 0) {
+            return (<p>whoops</p>)
+        } else {
+            return (<section className="characters" >
+                {/* Pass list title & state path */}
+                <ItemList title={"Comics"} path={character.comics} />
+                <ItemList title={"Series"} path={character.series} />
+                <ItemList title={"Events"} path={character.events} />
+                <ItemList title={"Stories"} path={character.stories} />
+            </section>)
+        }
+    }
     componentDidMount = () => this.loadCharacter();
 
     render() {
@@ -91,13 +112,9 @@ class Character extends Component {
                     <img alt={character.name} src={character.thumbnail} height="300px" width="300px"></img>
                     {this.renderDescription(character.description)}
                 </section>
-                <section className="characters">
-                    {/* Pass list title & state path */}
-                    <ItemList title={"Comics"} path={character.comics} />
-                    <ItemList title={"Series"} path={character.series} />
-                    <ItemList title={"Events"} path={character.events} />
-                    <ItemList title={"Stories"} path={character.stories} />
-                </section>
+
+                {this.renderLists(character)}
+
                 <Footer credit={this.state.attribution} />
             </div >
         );

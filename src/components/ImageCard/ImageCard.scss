@@ -1,13 +1,13 @@
-@import '../../../scss/variables.scss';
+@import '../../scss/variables.scss';
 
 article.item-card{
     background-color: $background-2;
-    border: 2px solid #404f59;
+    border: 4px solid #404f59;
     height: 250px;
     width: calc(100% / 2 - 50px);   
     border-radius: 10px 10px 0 0;
     h3{
-        border: 2px solid $background-1;
+        border-bottom: 2px solid $background-1;
         margin: 0;
         padding: 15px 20px;
         // width: fit-content;
@@ -19,6 +19,7 @@ article.item-card{
 
     img{
         margin: 20px;
+        right: 0;
         border: 2px solid $text-2;
         height: 150px;
         width: 150px;
@@ -33,9 +34,9 @@ article.item-card{
             float: left;
             width: calc(80% - 8rem);
             margin: 20px;
-
+            height: 154px;
             a{
-                margin: 20px 0;
+                margin: 5px 0;
                 width: max-content;
                 padding: 10px;
                 border-radius: 5px;
@@ -50,16 +51,15 @@ article.item-card{
                 border: 2px solid $text-1;
             }
             p{
-                margin: 10px;
                 text-align: left;
+                margin: 0;
+                padding: 5px;
                 height: min-content;
+                border: 2px solid #404f59;
+                height: 92px;
                 &.unavailable{
-                    margin: 10px 0;
                     margin: 0;
-                    height: 20px;
-                    padding: 10px;
-                    background-color: #404f59;
-                    border: 2px solid #303841;
+                    height: 92px;
                 }
             }
         }

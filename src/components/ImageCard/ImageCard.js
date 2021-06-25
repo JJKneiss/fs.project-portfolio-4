@@ -15,7 +15,7 @@ const ImageCard = props => {
             return (<p className="unavailable">{"No Description Available"}</p>)
         }
         else {
-            let newDesc = desc.slice(" ", 150);
+            let newDesc = desc.slice(" ", 325);
             newDesc += "..."
             return (<p>{newDesc}</p>)
         }
@@ -32,7 +32,7 @@ const ImageCard = props => {
                     pathname: "/Character/" + id,
                     state: props.val
                 }}>
-                    Read More
+                    Details
             </NavLink>
             </div>
         </article >
