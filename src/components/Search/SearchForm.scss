@@ -1,0 +1,31 @@
+@import '../../scss/variables.scss';
+
+form{
+    margin: 20px;
+    justify-content: center;
+    input{
+        margin: 0px;
+        padding: 10px;
+        border: none;
+        padding: 10px;
+        border-radius: 10px 0 0 10px;
+        border: 2px solid #303841;
+        border-right: none;
+    }
+    button:disabled{
+        color: gray;
+    }
+    button{
+        color: $text-1;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    svg{
+        margin: 0px;
+        padding: 10px;
+        border: 2px solid #303841;
+        border-radius: 0 10px 10px 0 ;
+        background-color: #404f59;
+    }
+}

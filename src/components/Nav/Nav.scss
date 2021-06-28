@@ -1,0 +1,16 @@
+@import '../../scss/variables.scss';
+nav{
+    a{
+        color: $text-1;
+        text-decoration: none;
+        list-style: none;
+        display: inline;
+        margin: 0 1rem;
+        padding: 10px 25px;
+        border: 2px solid $text-1;
+        border-radius: 10px;
+        &:hover{
+            background-color: $text-2;
+        }
+    }
+}
