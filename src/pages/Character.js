@@ -14,7 +14,8 @@ class Character extends Component {
             comics: [],
             series: [],
             stories: [],
-            events: []
+            events: [],
+            wiki: ""
         }
     }
     loadCharacter = () => {
@@ -37,6 +38,7 @@ class Character extends Component {
             c.series = state.series.items;
             c.stories = state.stories.items;
             c.events = state.events.items;
+            c.wiki = state.wiki;
         }
         this.setState({ character: c })
     }
@@ -64,6 +66,7 @@ class Character extends Component {
             c.series = character.series.items;
             c.stories = character.stories.items;
             c.events = character.events.items;
+            c.wiki = character.wiki;
             this.setState({ character: c })
         }
         catch (err) {
@@ -109,7 +112,6 @@ class Character extends Component {
                 <Header />
                 <CharacterDescription character={character} method={this.renderDescription(character.description)} />
                 {this.renderLists(character)}
-
                 <Footer credit={this.state.attribution} />
             </div >
         );

@@ -15,7 +15,7 @@ const ImageCard = props => {
             return (<p className="unavailable">{"No Description Available"}</p>)
         }
         else {
-            let newDesc = desc.slice(" ", 250);
+            let newDesc = desc.slice(" ", 240);
             newDesc += "..."
             return (<p>{newDesc}</p>)
         }
@@ -30,17 +30,11 @@ const ImageCard = props => {
                 {goToChar(title)}
             </h3>
             {goToChar(<img alt={title} src={thumbnail} width={props.width} height={props.height} />)}
-
             <div className="description">
                 {/* Set render conditional */}
                 {renderDescription()}
                 {/* {Navigate to page using character } */}
-                < NavLink to={{
-                    pathname: "/Character/" + id,
-                    state: props.val
-                }}>
-                    Details
-            </NavLink>
+                {goToChar("Details")}
             </div>
         </article >
     );

@@ -2,9 +2,21 @@
 section.individual{
     width: 70%;
     margin: 0 auto;
-    h2, p{
+    h2, a{
         color: $background-2;
+    }
+    img{
+        margin: 0 0;
+    }
+    h2, p{
         text-align: left;
+        margin: 20px;
+    }
+    p{
+        padding: 20px;
+    }
+    a{
+        font-size: 18px;
     }
 }
 section.individual + section.characters{

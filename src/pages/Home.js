@@ -72,6 +72,7 @@ class Home extends Component {
                     c.events = element.events;
                     c.series = element.series;
                     c.stories = element.stories;
+                    c.wiki = element.urls[0].url;
                     arr.push(c);
                 });
                 // Set state using Character Object

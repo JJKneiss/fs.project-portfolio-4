@@ -7,5 +7,6 @@ class CharData {
     events = "";
     series = "";
     stories = "";
+    wiki = "";
 }
 export default CharData;
