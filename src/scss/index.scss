@@ -1,4 +1,4 @@
-@import 'scss/variables.scss';
+@import '../scss/variables.scss';
 body {
   margin: 0;
   background-color: $text-1;
@@ -14,19 +14,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+p{
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+h1{
+  font-size: 32px;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+h2, h3{
+  font-family: 'Courier New', monospace;
+}
 div{
   margin: 0 auto;
   &.profile, & .project{
-    margin: 6rem;
-    background-color: $background-2;
-  }
-  &.profile{
-    float: left;
-    width: calc(45% - 6.5rem);
-  }
-  &.project{
-    float: right;
-    width: calc(55% - 6.5rem);
+    margin: 20px 200px;
+    text-align: left;
+    color: $background-1;
+    p{
+      padding: 20px;
+      color: $text-1;
+      background-color: $background-2;
+    }
   }
 }
 button.load-more{
@@ -34,14 +42,4 @@ button.load-more{
   border: 2px solid #3a4750;
   background-color: $text-2;
   color: #eeeeee;
-}
-header + section.characters{
-  width: 80%;
-  margin: 0 auto;
-  p{
-    margin: 0 auto;
-    text-align: left;
-    background-color: grey;
-    padding: 20px;
-  }
 }

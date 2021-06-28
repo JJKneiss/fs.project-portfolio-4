@@ -13,11 +13,11 @@ const Footer = props => {
 
                 </li>
                 <li>
-                    <a href="https://www.linkedin.com/in/jjkneiss-aba/"><FaFacebookSquare /></a>
+                    <a href="https://www.facebook.com/daevus.abaddon.1/"><FaFacebookSquare /></a>
 
                 </li>
                 <li>
-                    <a href="https://www.linkedin.com/in/jjkneiss-aba/"><FaInstagram /></a>
+                    <a href="https://www.instagram.com/jj_kneiss/"><FaInstagram /></a>
                 </li>
             </ul>
             <a href="http://marvel.com\" className="attribute"> {props.credit}</a>

@@ -12,4 +12,14 @@ footer{
     padding: 2rem;
     float: left;
     background-color: $background-2; 
+    ul{
+        li{
+            display: inline;
+            margin: 20px;
+        }
+        svg{
+            height: 30px;
+            width: 30px;
+        }
+    }
 }

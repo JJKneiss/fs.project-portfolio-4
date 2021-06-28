@@ -12,20 +12,21 @@ class SearchPage extends Component {
     state = {
         charData: [],
         attribution: [],
-        limiter: 4,
+        limiter: 8,
         offset: 0,
         totalResults: 0
     }
 
     loadAPI = async () => {
-        // Create API call
-        const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
-        let auth = "9fc3988f672586da032a847df46e7861";
-        let connect = api + auth;
-        connect += '&limit=' + this.state.limiter;
-        connect += '&offset=' + this.state.offset;
-        console.log('api url', connect)
-        this.setData(connect);
+        // // Create API call
+        // const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
+        // let auth = "9fc3988f672586da032a847df46e7861";
+        // let connect = api + auth;
+        // connect += '&limit=' + this.state.limiter;
+        // connect += '&offset=' + this.state.offset;
+        // console.log('api url', connect)
+        // this.setData(connect);
+        this.sendSearch(this.props.match.params.text);
     };
     sendSearch(item) {
         if (item !== undefined && item !== "") {
@@ -59,6 +60,10 @@ class SearchPage extends Component {
                 console.log("api response", data.data)
                 // Pass data to new Character Object
                 this.setState({ offset: data.data.offset + data.data.count, totalResults: data.data.total })
+                console.log("data", this.state.charData);
+                console.log("limiter", this.state.limiter);
+                console.log("offset", this.state.offset);
+                console.log("totalResults", this.state.totalResults);
                 data.data.results.forEach(element => {
                     let c = new CharData();
                     c.id = element.id;
@@ -102,15 +107,9 @@ class SearchPage extends Component {
                 <Header />
                 {/* SB: No longer need to pass unnecessary data or functions to Search. */}
                 <SearchForm />
-                <section className="characters">
-                    <ImageList path={this.state.charData} className="characters" />
-                    {/* <button className="load-more" onClick={() => { */}
-                    {/* this.setState({ limiter: this.state.limiter + 4 }) */}
-                    {/* console.log(this.state.limiter) */}
-                    {/* }}>Load More</button> */}
-                    <button className="load-more" onClick={this.loadAPI} />
-                    <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
-                </section>
+                <ImageList path={this.state.charData} className="characters" />
+                <button className="load-more" onClick={this.loadAPI}>Load More</button>
+                <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
                 <Footer credit={this.state.attribution} />
             </div >
         );

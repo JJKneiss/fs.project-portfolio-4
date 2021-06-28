@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Footer from '../components/Footer/Footer';
 import Header from '../components/Header/Header';
 import ItemList from '../components/ItemList/ItemList';
+import CharacterDescription from '../components/CharacterDescription/CharacterDescription';
 import CharData from '../data/CharData';
-
 class Character extends Component {
     state = {
         character: {
@@ -107,12 +107,7 @@ class Character extends Component {
         return (
             <div className="App" >
                 <Header />
-                <section className="characters">
-                    <h2>{character.name}</h2>
-                    <img alt={character.name} src={character.thumbnail} height="300px" width="300px"></img>
-                    {this.renderDescription(character.description)}
-                </section>
-
+                <CharacterDescription character={character} method={this.renderDescription(character.description)} />
                 {this.renderLists(character)}
 
                 <Footer credit={this.state.attribution} />

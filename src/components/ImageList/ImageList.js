@@ -11,9 +11,9 @@ const ImageList = props => {
     })
     return (
         // < section className="characters" >
-        <div>
+        <section className="characters">
             {list}
-        </div>
+        </section>
         //         {/* <button className="load-more" onClick={() => { */ }
         // {/* this.setState({ limiter: this.state.limiter + 4 }) */ }
         // {/* console.log(this.state.limiter) */ }

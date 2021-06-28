@@ -11,7 +11,7 @@ class Home extends Component {
     state = {
         charData: [],
         attribution: [],
-        limiter: 4,
+        limiter: 8,
         offset: 0,
         totalResults: 0
     }
@@ -55,9 +55,13 @@ class Home extends Component {
             }
             else {
                 console.log(connect);
-                console.log("api response", data.data)
+                console.log("api response", data.data);
                 // Pass data to new Character Object
                 this.setState({ offset: data.data.offset + data.data.count })
+                console.log("data", this.state.charData);
+                console.log("limiter", this.state.limiter);
+                console.log("offset", this.state.offset);
+                console.log("totalResults", this.state.totalResults);
                 data.data.results.forEach(element => {
                     let c = new CharData();
                     c.id = element.id;
@@ -87,15 +91,9 @@ class Home extends Component {
             <div className="App">
                 <Header />
                 <SearchForm />
-                <section className="characters">
-                    <ImageList path={this.state.charData} className="characters" />
-                    {/* <button className="load-more" onClick={() => { */}
-                    {/* this.setState({ limiter: this.state.limiter + 4 }) */}
-                    {/* console.log(this.state.limiter) */}
-                    {/* }}>Load More</button> */}
-                    <button className="load-more" onClick={this.loadAPI}>Load More</button>
-                    <p></p>
-                </section>
+                <ImageList path={this.state.charData} className="characters" />
+                <button className="load-more" onClick={this.loadAPI}>Load More</button>
+                <p></p>
                 <Footer credit={this.state.attribution} />
             </div >
         );

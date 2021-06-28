@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header/Header';
 import ImageCard from '../components/ImageCard/ImageCard';
+import profileImage from '../image/profileImage.jpg';
 
 class About extends Component {
     state = {
@@ -8,7 +9,7 @@ class About extends Component {
         }],
         profile: [{
             name: "Jamie Kneiss",
-            thumbnail: "",
+            thumbnail: profileImage,
             description: "Description"
         }],
         project: [{
@@ -27,7 +28,7 @@ class About extends Component {
                 <section>
                     <div className="profile">
                         <h2>Jamie Kneiss</h2>
-                        <img alt={profile} src={""} height="300px" width="300px" />
+                        <img alt={profile} src={profileImage} height="300px" width="300px" />
                         <p>Minor Description</p>
                     </div>
                     <div className="project">
