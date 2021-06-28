@@ -29,11 +29,11 @@ class About extends Component {
                     <div className="profile">
                         <h2>Jamie Kneiss</h2>
                         <img alt={profile} src={profileImage} height="300px" width="300px" />
-                        <p>Minor Description</p>
+                        <p>Jamie is an aspiring web developer doing his best to bring the spirit of each project to life.</p>
                     </div>
                     <div className="project">
                         <h2>Project: Marvel Wiki</h2>
-                        <p>A basic wiki application using the Marvel API</p>
+                        <p>While just a basic wiki application using the Marvel API, this React based application has taught Jamie a lot about the React framework, maintaining project scope, and simply thinking along the lines that a developer should. </p>
                     </div>
                 </section>
             </div >
