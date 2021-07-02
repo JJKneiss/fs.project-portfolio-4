@@ -1,3 +1,4 @@
+// Data Transfer Object
 class CharData {
     id = "";
     name = "";
