@@ -57,7 +57,7 @@ class Home extends Component {
                 console.log(connect);
                 console.log("api response", data.data);
                 // Pass data to new Character Object
-                this.setState({ offset: data.data.offset + data.data.count })
+                this.setState({ offset: data.data.offset + data.data.count, totalResults: data.data.total })
                 console.log("data", this.state.charData);
                 console.log("limiter", this.state.limiter);
                 console.log("offset", this.state.offset);
@@ -94,7 +94,7 @@ class Home extends Component {
                 <SearchForm />
                 <ImageList path={this.state.charData} className="characters" />
                 <button className="load-more" onClick={this.loadAPI}>Load More</button>
-                <p></p>
+                <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
                 <Footer credit={this.state.attribution} />
             </div >
         );
