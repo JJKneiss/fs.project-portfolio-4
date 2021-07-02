@@ -3,6 +3,7 @@ import Header from '../components/Header/Header';
 import ImageCard from '../components/ImageCard/ImageCard';
 import profileImage from '../image/profileImage.jpg';
 
+/* JK: This page displays a minor profile for the site developers */
 class About extends Component {
     state = {
         formInput: [{
@@ -10,11 +11,7 @@ class About extends Component {
         profile: [{
             name: "Jamie Kneiss",
             thumbnail: profileImage,
-            description: "Description"
-        }],
-        project: [{
-            name: "Project Synopsis: Marvel Wiki",
-            description: "A simple wiki using the Marvel API"
+            description: "Jamie is an aspiring web developer doing his best to bring the spirit of each project to life."
         }]
     }
     render() {
@@ -27,9 +24,9 @@ class About extends Component {
                 <Header />
                 <section>
                     <div className="profile">
-                        <h2>Jamie Kneiss</h2>
+                        <h2>{this.state.profile.name}</h2>
                         <img alt={profile} src={profileImage} height="300px" width="300px" />
-                        <p>Jamie is an aspiring web developer doing his best to bring the spirit of each project to life.</p>
+                        <p>{this.state.profile.description}</p>
                     </div>
                     <div className="project">
                         <h2>Project: Marvel Wiki</h2>

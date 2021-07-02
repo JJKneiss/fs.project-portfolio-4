@@ -4,6 +4,7 @@ import { FaFacebookSquare } from 'react-icons/fa'
 import { FaInstagram } from 'react-icons/fa'
 import './Footer.scss'
 
+/* JK: Basic Footer with Social Media Links */
 const Footer = props => {
     return (
         <footer>

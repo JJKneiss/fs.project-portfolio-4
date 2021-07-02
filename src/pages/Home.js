@@ -6,6 +6,7 @@ import SearchForm from '../components/Search/SearchForm';
 import CharData from '../data/CharData';
 import ImageList from '../components/ImageList/ImageList';
 
+/* JK: This page loads Characters alphabetically from the Marvel API */
 class Home extends Component {
 
     state = {

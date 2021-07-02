@@ -1,7 +1,9 @@
 import React from 'react';
 import './ItemList.scss'
+
+/* JK: Create List of <li> tags using passed data */
 const ItemList = props => {
-    // Set property for conditional render
+    /* Render Items according to availability */
     let renderItems = () => {
         if (props.path.length === 0) {
             return <p className="unavailable">Not Available</p>
@@ -16,7 +18,6 @@ const ItemList = props => {
         <article >
             <h2>{props.title}</h2>
             <ul>
-                {/* load property */}
                 {renderItems()}
             </ul>
         </article>

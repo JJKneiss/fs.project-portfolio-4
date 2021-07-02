@@ -4,6 +4,8 @@ import Header from '../components/Header/Header';
 import ItemList from '../components/ItemList/ItemList';
 import CharacterDescription from '../components/CharacterDescription/CharacterDescription';
 import CharData from '../data/CharData';
+
+/* JK: This page loads a specific character from the searched lists */
 class Character extends Component {
     state = {
         character: {
@@ -18,18 +20,20 @@ class Character extends Component {
             wiki: ""
         }
     }
+    /* JK: Load Character data from search */
     loadCharacter = () => {
-        // Abbreviate state variable & create new Character Object
+        /* JK: Abbreviate state variable & create new Character Object */
         let state = this.props.location.state;
         let c = new CharData();
 
-        // Load API if state empty
+        /* JK: Load API if state empty */
         if (state === undefined) {
             this.loadAPI();
         }
-        // Otherwise use props to fill data
+        /* JK: Otherwise use props to fill data */
         else {
             c.id = state.id
+
             c.name = state.name;
             c.description = state.description;
             c.thumbnail = state.thumbnail;
@@ -38,10 +42,12 @@ class Character extends Component {
             c.series = state.series.items;
             c.stories = state.stories.items;
             c.events = state.events.items;
+
             c.wiki = state.wiki;
         }
         this.setState({ character: c })
     }
+    /* JK: Load API call during empty state */
     loadAPI = async () => {
         // Set id to passed prop params
         let charId = this.props.match.params.text;
@@ -55,7 +61,6 @@ class Character extends Component {
             const response = await fetch(connect);
             const data = await response.json();
             let character = data.data.results[0];
-            console.log();
             // Use Character Object to pass data to state
             let c = new CharData();
             c.id = character.id
@@ -73,6 +78,8 @@ class Character extends Component {
             console.log(err);
         }
     };
+
+    /* JK: Render description as unavailable if no text is in desc */
     renderDescription(desc) {
         if (desc === "") {
             return (<p className="unavailable">{"No Description Available"}</p>)
@@ -81,6 +88,8 @@ class Character extends Component {
             return (<p>{desc}</p>)
         }
     }
+
+    /* JK: Render character details according to availability  */
     renderLists(character) {
         console.log(character.comics.length);
         let arr = [character.comics, character.series, character.events, character.stories];
@@ -99,13 +108,14 @@ class Character extends Component {
                 <ItemList title={"Series"} path={character.series} />
                 <ItemList title={"Events"} path={character.events} />
                 <ItemList title={"Stories"} path={character.stories} />
-            </section>)
+            </section >)
         }
     }
+
     componentDidMount = () => this.loadCharacter();
 
+    /* JK: Abbreviate state & set render logic */
     render() {
-        // Abbreviate state & set render logic
         let character = this.state.character;
         return (
             <div className="App" >
