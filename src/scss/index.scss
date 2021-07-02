@@ -44,4 +44,10 @@ button.load-more{
   border: 2px solid #3a4750;
   background-color: $text-2;
   color: #eeeeee;
+  &:disabled{
+    visibility: hidden;
+  }
+}
+p.status{
+  float: left;
 }

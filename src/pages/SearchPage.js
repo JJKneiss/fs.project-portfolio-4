@@ -18,24 +18,23 @@ class SearchPage extends Component {
     }
 
     loadAPI = async () => {
-        // // Create API call
-        // const api = "https://gateway.marvel.com/v1/public/characters?&apikey=";
-        // let auth = "9fc3988f672586da032a847df46e7861";
-        // let connect = api + auth;
-        // connect += '&limit=' + this.state.limiter;
-        // connect += '&offset=' + this.state.offset;
-        // console.log('api url', connect)
-        // this.setData(connect);
         this.sendSearch(this.props.match.params.text);
     };
-    sendSearch(item) {
+    sendSearch(item, src) {
         if (item !== undefined && item !== "") {
             (async () => {
                 const api = "https://gateway.marvel.com/v1/public/characters?nameStartsWith=";
                 let name = item;
                 let fullCall = api + name
+
                 fullCall += '&limit=' + this.state.limiter;
-                fullCall += '&offset=' + this.state.offset;
+                if (src === "search") {
+                    this.setState({ offset: 0 });
+                    fullCall += '&offset=' + 0;
+                }
+                else {
+                    fullCall += '&offset=' + this.state.offset;
+                }
                 const key = "&apikey=";
                 let auth = "9fc3988f672586da032a847df46e7861";
                 let fullAuth = key + auth;
@@ -57,13 +56,9 @@ class SearchPage extends Component {
                 alert("No results. Please check your spelling");
             }
             else {
-                console.log("api response", data.data)
+                console.log("api response", data.data);
                 // Pass data to new Character Object
-                this.setState({ offset: data.data.offset + data.data.count, totalResults: data.data.total })
-                console.log("data", this.state.charData);
-                console.log("limiter", this.state.limiter);
-                console.log("offset", this.state.offset);
-                console.log("totalResults", this.state.totalResults);
+
                 data.data.results.forEach(element => {
                     let c = new CharData();
                     c.id = element.id;
@@ -77,10 +72,13 @@ class SearchPage extends Component {
                     c.wiki = element.urls[1].url;
                     arr.push(c);
                 });
-                // Set state using Character Object
-                this.setState({ charData: arr })
-                this.setState({ attribution: credit })
-                console.log(arr)
+                this.setState({
+                    charData: arr,
+                    attribution: credit,
+                    offset: data.data.offset + data.data.count,
+                    totalResults: data.data.total
+                });
+                console.log(arr);
             }
         }
         catch (err) {
@@ -89,7 +87,7 @@ class SearchPage extends Component {
     }
 
     // SB: Runs any time the component is about to be displayed, so we grab the url variable and trigger our search.
-    componentDidMount = () => this.sendSearch(this.props.match.params.text);
+    componentDidMount = () => this.sendSearch(this.props.match.params.text, "search");
 
     // SB: Runs if the component is already mounted, but something in props or state changes.
     componentDidUpdate = (previousProps) => {
@@ -99,7 +97,11 @@ class SearchPage extends Component {
         if (previousProps.match.params.text !== this.props.match.params.text) {
             // SB Note: In here would be a reasonable place to nuke the charData array, since it only runs when the
             //          search has changed and not necessarily when you "show more"
-            this.sendSearch(this.props.match.params.text);
+            this.setState({ charData: [] });
+            this.setState({ offset: 0 });
+            this.setState({ totalResults: 0 })
+            console.log(`Prior Update: Offset: ${this.state.offset}, Limiter: ${this.state.limiter}, Total: ${this.state.totalResults}`);
+            this.sendSearch(this.props.match.params.text, "search");
         }
     }
     render() {
@@ -109,7 +111,7 @@ class SearchPage extends Component {
                 {/* SB: No longer need to pass unnecessary data or functions to Search. */}
                 <SearchForm />
                 <ImageList path={this.state.charData} className="characters" />
-                <button className="load-more" onClick={this.loadAPI}>Load More</button>
+                <button disabled={(this.state.charData.length === this.state.totalResults)} className="load-more" onClick={this.loadAPI}>Load More</button>
                 <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
                 <Footer credit={this.state.attribution} />
             </div >
