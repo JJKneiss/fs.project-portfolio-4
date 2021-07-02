@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './ImageCard.scss'
 
+/* JK: Image Card involving title, image, & description */
 const ImageCard = props => {
     // Create Variables for Card Info
     let title = props.val.name;
@@ -9,9 +10,9 @@ const ImageCard = props => {
     let desc = (props.val.description || "No Description Available");
     let thumbnail = props.val.thumbnail;
 
-    // Set Unavailable if Description empty
+    /* JK: Render description according to availability*/
     let renderDescription = () => {
-        if (desc === "No Description Available" || desc === " ") {
+        if (desc === "No Description Available" || desc === "") {
             return (<p className="unavailable">{"No Description Available"}</p>)
         }
         else {
@@ -20,15 +21,14 @@ const ImageCard = props => {
             return (<p>{newDesc}</p>)
         }
     }
+    /* JK: Create navlink with parameter */
     let goToChar = (item) => (< NavLink to={{
         pathname: "/Character/" + id,
         state: props.val
     }}>{item}</NavLink>)
     return (
         <article className="item-card" key={props.id}>
-            <h3>
-                {goToChar(title)}
-            </h3>
+            <h3>{goToChar(title)}</h3>
             {goToChar(<img alt={title} src={thumbnail} width={props.width} height={props.height} />)}
             <div className="description">
                 {/* Set render conditional */}

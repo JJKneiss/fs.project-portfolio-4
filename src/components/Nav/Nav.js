@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Nav.scss'
+/* JK: Basic Nav */
 const Nav = props => {
     return (
         <nav>

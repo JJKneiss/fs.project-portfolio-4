@@ -2,6 +2,7 @@ import React from 'react';
 import './Header.scss'
 import Nav from '../Nav/Nav';
 
+/* JK: Basic Header */
 const Header = props => {
     return (
         <header>

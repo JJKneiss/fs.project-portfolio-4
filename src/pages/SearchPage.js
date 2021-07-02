@@ -6,9 +6,8 @@ import SearchForm from '../components/Search/SearchForm';
 import CharData from '../data/CharData';
 import ImageList from '../components/ImageList/ImageList';
 
+/* JK: This page sends user input search parameters and returns the desired characters */
 class SearchPage extends Component {
-
-
     state = {
         charData: [],
         attribution: [],
@@ -17,9 +16,10 @@ class SearchPage extends Component {
         totalResults: 0
     }
 
-    loadAPI = async () => {
-        this.sendSearch(this.props.match.params.text);
-    };
+    /* JK: On Button Click, load API again with search input */
+    loadAPI = async () => this.sendSearch(this.props.match.params.text);
+
+    /* JK: Accept search input & method source for context, then send to final API call */
     sendSearch(item, src) {
         if (item !== undefined && item !== "") {
             (async () => {
@@ -46,6 +46,9 @@ class SearchPage extends Component {
             alert("Search bar empty.");
         }
     }
+
+    /* JK: Using search parameters,
+    accept API data using transfer object and populate state with details */
     async setData(connect) {
         try {
             const response = await fetch(connect);
@@ -57,8 +60,8 @@ class SearchPage extends Component {
             }
             else {
                 console.log("api response", data.data);
-                // Pass data to new Character Object
 
+                /* JK: Pass api data to new Character */
                 data.data.results.forEach(element => {
                     let c = new CharData();
                     c.id = element.id;
@@ -97,10 +100,7 @@ class SearchPage extends Component {
         if (previousProps.match.params.text !== this.props.match.params.text) {
             // SB Note: In here would be a reasonable place to nuke the charData array, since it only runs when the
             //          search has changed and not necessarily when you "show more"
-            this.setState({ charData: [] });
-            this.setState({ offset: 0 });
-            this.setState({ totalResults: 0 })
-            console.log(`Prior Update: Offset: ${this.state.offset}, Limiter: ${this.state.limiter}, Total: ${this.state.totalResults}`);
+            this.setState({ charData: [], offset: 0, totalResults: 0 });
             this.sendSearch(this.props.match.params.text, "search");
         }
     }
@@ -111,7 +111,9 @@ class SearchPage extends Component {
                 {/* SB: No longer need to pass unnecessary data or functions to Search. */}
                 <SearchForm />
                 <ImageList path={this.state.charData} className="characters" />
+                {/* JK: On button click, clear state & create new API call with user input */}
                 <button disabled={(this.state.charData.length === this.state.totalResults)} className="load-more" onClick={this.loadAPI}>Load More</button>
+                {/* JK: Display the current set of results out of total results */}
                 <p>Showing {this.state.charData.length} of {this.state.totalResults} results.</p>
                 <Footer credit={this.state.attribution} />
             </div >

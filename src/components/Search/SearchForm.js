@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { FaSearch } from 'react-icons/fa';
 import './SearchForm.scss';
 
+/* JK: Search form to make character calls to the Marvel API */
 class SearchForm extends React.Component {
     // Create Controlled Component
     constructor(props) {
